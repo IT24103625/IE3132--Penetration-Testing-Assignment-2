@@ -1,17 +1,37 @@
-<h2>Patient Portal Login</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Portal Login</title>
+</head>
+<body>
 
-<form>
-Username:
-<input>
+<h1>Patient Portal Login</h1>
 
-<br><br>
+<p>
+Authorized users only.
+</p>
 
-Password:
-<input type="password">
+<form method="POST">
 
-<br><br>
+    Username<br>
+    <input type="text" name="username">
 
-<button>
-Login
-</button>
+    <br><br>
+
+    Password<br>
+    <input type="password" name="password">
+
+    <br><br>
+
+    <button type="submit">
+        Login
+    </button>
+
 </form>
+
+<p style="color:red">
+{{ error }}
+</p>
+
+</body>
+</html>
