@@ -1,0 +1,441 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+
+PS C:\Users\kusha> New-Item -ItemType Directory -Force C:\PL-06-Forensics
+>> cd C:\PL-06-Forensics
+
+
+    Directory: C:\
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        10/10/2026   9:56 AM                PL-06-Forensics
+
+
+PS C:\PL-06-Forensics> notepad Dockerfile
+PS C:\PL-06-Forensics> Get-ChildItem | Select-Object Name, Length
+
+Name           Length
+----           ------
+Dockerfile.txt    305
+
+
+PS C:\PL-06-Forensics> Rename-Item "Dockerfile.txt" "Dockerfile"
+PS C:\PL-06-Forensics> Get-ChildItem | Select-Object Name, Length
+
+Name       Length
+----       ------
+Dockerfile    305
+
+
+PS C:\PL-06-Forensics> docker build -t pulselock-forensics .
+[+] Building 266.8s (8/8) FINISHED                                   docker:desktop-linux
+ => [internal] load build definition from Dockerfile                                 0.2s
+ => => transferring dockerfile: 344B                                                 0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim              6.1s
+ => [auth] library/debian:pull token for registry-1.docker.io                        0.0s
+ => [internal] load .dockerignore                                                    0.1s
+ => => transferring context: 2B                                                      0.0s
+ => CACHED [1/3] FROM docker.io/library/debian:bookworm-slim@sha256:7c7b2c966bc9ee8  0.1s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef  0.1s
+ => [2/3] RUN apt-get update &&     apt-get install -y --no-install-recommends     252.5s
+ => [3/3] WORKDIR /challenge                                                         0.1s
+ => exporting to image                                                               7.3s
+ => => exporting layers                                                              5.3s
+ => => exporting manifest sha256:b4f9c374e13e56c8c2cef80fd24569e6fb2989ee639422f52d  0.0s
+ => => exporting config sha256:f51d60ebc4888883963044063df7be559a0d90067d813957fb6e  0.0s
+ => => exporting attestation manifest sha256:30cee7eeb5723a5feb2e5a2577c5ab4f764896  0.0s
+ => => exporting manifest list sha256:ece781ba564777e1ef3dfbb1083c4166f7b7c57f442d9  0.0s
+ => => naming to docker.io/library/pulselock-forensics:latest                        0.0s
+ => => unpacking to docker.io/library/pulselock-forensics:latest                     1.7s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/8q6b1rdhy021vulw10dxb24yf
+PS C:\PL-06-Forensics> @'
+>> 2026-09-18T09:12:00Z medcore-server sshd[1201]: Failed password for invalid user guest from 10.10.20.45 port 51230 ssh2
+>> 2026-09-18T09:13:15Z medcore-server sshd[1208]: Failed password for researcher from 10.10.20.45 port 51235 ssh2
+>> 2026-09-18T09:14:22Z medcore-server sshd[1212]: Accepted password for researcher from 10.10.20.45 port 51240 ssh2
+>> 2026-09-18T09:14:23Z medcore-server sshd[1212]: pam_unix(sshd:session): session opened for user researcher
+>> 2026-09-18T09:26:40Z medcore-server sshd[1212]: Disconnected from user researcher 10.10.20.45
+>> '@ | Set-Content -Encoding UTF8 auth.log
+PS C:\PL-06-Forensics> Get-Content auth.log
+2026-09-18T09:12:00Z medcore-server sshd[1201]: Failed password for invalid user guest from 10.10.20.45 port 51230 ssh2
+2026-09-18T09:13:15Z medcore-server sshd[1208]: Failed password for researcher from 10.10.20.45 port 51235 ssh2
+2026-09-18T09:14:22Z medcore-server sshd[1212]: Accepted password for researcher from 10.10.20.45 port 51240 ssh2
+2026-09-18T09:14:23Z medcore-server sshd[1212]: pam_unix(sshd:session): session opened for user researcher
+2026-09-18T09:26:40Z medcore-server sshd[1212]: Disconnected from user researcher 10.10.20.45
+PS C:\PL-06-Forensics> @'
+>> 10.10.20.45 - - [18/Sep/2026:09:10:02 +0000] "GET /login HTTP/1.1" 200 2450
+>> 10.10.20.45 - - [18/Sep/2026:09:11:10 +0000] "POST /login HTTP/1.1" 401 512
+>> 10.10.20.45 - - [18/Sep/2026:09:14:30 +0000] "GET /research/dashboard HTTP/1.1" 200 3812
+>> 10.10.20.45 - - [18/Sep/2026:09:17:05 +0000] "GET /research/export HTTP/1.1" 200 8240
+>> 10.10.20.45 - - [18/Sep/2026:09:21:12 +0000] "POST /research/upload HTTP/1.1" 201 768
+>> '@ | Set-Content -Encoding UTF8 access.log
+PS C:\PL-06-Forensics> Get-Content access.log
+10.10.20.45 - - [18/Sep/2026:09:10:02 +0000] "GET /login HTTP/1.1" 200 2450
+10.10.20.45 - - [18/Sep/2026:09:11:10 +0000] "POST /login HTTP/1.1" 401 512
+10.10.20.45 - - [18/Sep/2026:09:14:30 +0000] "GET /research/dashboard HTTP/1.1" 200 3812
+10.10.20.45 - - [18/Sep/2026:09:17:05 +0000] "GET /research/export HTTP/1.1" 200 8240
+10.10.20.45 - - [18/Sep/2026:09:21:12 +0000] "POST /research/upload HTTP/1.1" 201 768
+PS C:\PL-06-Forensics> Get-ChildItem | Select-Object Name, Length
+
+Name       Length
+----       ------
+access.log    417
+auth.log      551
+Dockerfile    305
+
+
+PS C:\PL-06-Forensics> @'
+>> timestamp_utc,username,activity,filename,evidence_id
+>> 2026-09-18T09:14:22Z,researcher,Successful SSH login,session_1212,AUTH-03
+>> 2026-09-18T09:17:05Z,researcher,Research export requested,research_export.csv,WEB-04
+>> 2026-09-18T09:18:40Z,researcher,File created,research_export.csv,FILE-01
+>> 2026-09-18T09:21:12Z,researcher,File uploaded,diagnostic_update.sh,FILE-02
+>> 2026-09-18T09:24:30Z,researcher,File deleted,research_export.csv,FILE-03
+>> '@ | Set-Content -Encoding UTF8 file_activity.csv
+PS C:\PL-06-Forensics> Get-Content file_activity.csv
+timestamp_utc,username,activity,filename,evidence_id
+2026-09-18T09:14:22Z,researcher,Successful SSH login,session_1212,AUTH-03
+2026-09-18T09:17:05Z,researcher,Research export requested,research_export.csv,WEB-04
+2026-09-18T09:18:40Z,researcher,File created,research_export.csv,FILE-01
+2026-09-18T09:21:12Z,researcher,File uploaded,diagnostic_update.sh,FILE-02
+2026-09-18T09:24:30Z,researcher,File deleted,research_export.csv,FILE-03
+PS C:\PL-06-Forensics> Get-ChildItem | Select-Object Name, Length
+
+Name              Length
+----              ------
+access.log           417
+auth.log             551
+Dockerfile           305
+file_activity.csv    437
+
+
+PS C:\PL-06-Forensics> @'
+>> OPERATION PULSELOCK
+>> PL-06 - FORENSIC TIMELINE RECONSTRUCTION
+>>
+>> Scenario:
+>> The MedCore General Hospital research server has experienced
+>> suspicious activity. Investigators recovered authentication logs,
+>> web access logs, and file activity records.
+>>
+>> Your task:
+>> 1. Identify the first confirmed successful SSH login.
+>> 2. Identify the affected user account.
+>> 3. Identify the source IP address.
+>> 4. Identify when the research export file was created.
+>> 5. Reconstruct the sequence of suspicious events.
+>> 6. Support your findings with evidence from multiple log files.
+>>
+>> Important:
+>> All timestamps must be converted to UTC.
+>> Do not modify the original evidence files.
+>>
+>> The PL-06 flag is awarded after successful timeline reconstruction.
+>> '@ | Set-Content -Encoding UTF8 evidence_notes.txt
+PS C:\PL-06-Forensics> Get-Content evidence_notes.txt
+OPERATION PULSELOCK
+PL-06 - FORENSIC TIMELINE RECONSTRUCTION
+
+Scenario:
+The MedCore General Hospital research server has experienced
+suspicious activity. Investigators recovered authentication logs,
+web access logs, and file activity records.
+
+Your task:
+1. Identify the first confirmed successful SSH login.
+2. Identify the affected user account.
+3. Identify the source IP address.
+4. Identify when the research export file was created.
+5. Reconstruct the sequence of suspicious events.
+6. Support your findings with evidence from multiple log files.
+
+Important:
+All timestamps must be converted to UTC.
+Do not modify the original evidence files.
+
+The PL-06 flag is awarded after successful timeline reconstruction.
+PS C:\PL-06-Forensics> Get-ChildItem | Select-Object Name, Length
+                                                                                          Name               Length                                                                 ----               ------                                                                 access.log            417                                                                 auth.log              551                                                                 Dockerfile            305
+evidence_notes.txt    721
+file_activity.csv     437
+
+
+PS C:\PL-06-Forensics> docker run --rm -it --name pl06-forensics -v "C:\PL-06-Forensics:/challenge" pulselock-forensics
+root@08b9271a3eff:/challenge# ls -lh
+total 5.0K
+-rwxrwxrwx 1 root root 305 Oct 10 04:28 Dockerfile
+-rwxrwxrwx 1 root root 417 Oct 10 04:39 access.log
+-rwxrwxrwx 1 root root 551 Oct 10 04:37 auth.log
+-rwxrwxrwx 1 root root 721 Oct 10 04:44 evidence_notes.txt
+-rwxrwxrwx 1 root root 437 Oct 10 04:41 file_activity.csv
+root@08b9271a3eff:/challenge# grep "Accepted password" auth.log
+2026-09-18T09:14:22Z medcore-server sshd[1212]: Accepted password for researcher from 10.10.20.45 port 51240 ssh2
+root@08b9271a3eff:/challenge# grep "research" access.log
+10.10.20.45 - - [18/Sep/2026:09:14:30 +0000] "GET /research/dashboard HTTP/1.1" 200 3812
+10.10.20.45 - - [18/Sep/2026:09:17:05 +0000] "GET /research/export HTTP/1.1" 200 8240
+10.10.20.45 - - [18/Sep/2026:09:21:12 +0000] "POST /research/upload HTTP/1.1" 201 768
+root@08b9271a3eff:/challenge# cat file_activity.csv
+﻿timestamp_utc,username,activity,filename,evidence_id
+2026-09-18T09:14:22Z,researcher,Successful SSH login,session_1212,AUTH-03
+2026-09-18T09:17:05Z,researcher,Research export requested,research_export.csv,WEB-04
+2026-09-18T09:18:40Z,researcher,File created,research_export.csv,FILE-01
+2026-09-18T09:21:12Z,researcher,File uploaded,diagnostic_update.sh,FILE-02
+2026-09-18T09:24:30Z,researcher,File deleted,research_export.csv,FILE-03
+root@08b9271a3eff:/challenge# grep "File created" file_activity.csv
+2026-09-18T09:18:40Z,researcher,File created,research_export.csv,FILE-01
+root@08b9271a3eff:/challenge# grep "File uploaded" file_activity.csv
+2026-09-18T09:21:12Z,researcher,File uploaded,diagnostic_update.sh,FILE-02
+root@08b9271a3eff:/challenge# grep "File deleted" file_activity.csv
+2026-09-18T09:24:30Z,researcher,File deleted,research_export.csv,FILE-03
+root@08b9271a3eff:/challenge# exit
+exit
+PS C:\PL-06-Forensics> Compress-Archive -Path auth.log,access.log,file_activity.csv,evidence_notes.txt -DestinationPath PL-06-Evidence.zip -Force
+PS C:\PL-06-Forensics> Get-ChildItem PL-06-Evidence.zip
+
+
+    Directory: C:\PL-06-Forensics
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        10/10/2026  10:23 AM           1510 PL-06-Evidence.zip
+
+
+PS C:\PL-06-Forensics> Get-FileHash PL-06-Evidence.zip -Algorithm SHA256
+
+Algorithm       Hash                                                                   Pa
+                                                                                       th
+---------       ----                                                                   --
+SHA256          2AAC791A7F420504936CB5129A081565E31E1D05101760E639561FCE235DF4D2       C:
+
+
+PS C:\PL-06-Forensics> Add-Type -AssemblyName System.IO.Compression.FileSystem
+>> [IO.Compression.ZipFile]::OpenRead("C:\PL-06-Forensics\PL-06-Evidence.zip").Entries.FullName
+auth.log
+access.log
+file_activity.csv
+evidence_notes.txt
+PS C:\PL-06-Forensics> @'
+>> timestamp_utc,event,evidence
+>> 2026-09-18T09:12:00Z,Failed guest SSH login,auth.log
+>> 2026-09-18T09:13:15Z,Failed researcher SSH login,auth.log
+>> 2026-09-18T09:14:22Z,Successful researcher SSH login,auth.log
+>> 2026-09-18T09:14:30Z,Research dashboard accessed,access.log
+>> 2026-09-18T09:17:05Z,Research export requested,access.log
+>> 2026-09-18T09:18:40Z,Research export file created,file_activity.csv
+>> 2026-09-18T09:21:12Z,Diagnostic script uploaded,file_activity.csv
+>> 2026-09-18T09:24:30Z,Research export file deleted,file_activity.csv
+>> 2026-09-18T09:26:40Z,SSH session disconnected,auth.log
+>> '@ | Set-Content -Encoding UTF8 solution_timeline.csv
+PS C:\PL-06-Forensics> Get-Content solution_timeline.csv
+timestamp_utc,event,evidence
+2026-09-18T09:12:00Z,Failed guest SSH login,auth.log
+2026-09-18T09:13:15Z,Failed researcher SSH login,auth.log
+2026-09-18T09:14:22Z,Successful researcher SSH login,auth.log
+2026-09-18T09:14:30Z,Research dashboard accessed,access.log
+2026-09-18T09:17:05Z,Research export requested,access.log
+2026-09-18T09:18:40Z,Research export file created,file_activity.csv
+2026-09-18T09:21:12Z,Diagnostic script uploaded,file_activity.csv
+2026-09-18T09:24:30Z,Research export file deleted,file_activity.csv
+2026-09-18T09:26:40Z,SSH session disconnected,auth.log
+PS C:\PL-06-Forensics> Add-Type -AssemblyName System.IO.Compression.FileSystem
+>>
+>> $zip = [IO.Compression.ZipFile]::OpenRead("C:\PL-06-Forensics\PL-06-Evidence.zip")
+>> $zip.Entries.FullName
+>> $zip.Dispose()
+auth.log
+access.log
+file_activity.csv
+evidence_notes.txt
+PS C:\PL-06-Forensics> cd C:\PL-06-Forensics
+>>
+>> $hash = (Get-FileHash .\PL-06-Evidence.zip -Algorithm SHA256).Hash.ToLower()
+>>
+>> "$hash  PL-06-Evidence.zip" | Set-Content -Encoding ascii SHA256SUMS.txt
+>>
+>> Get-Content SHA256SUMS.txt
+2aac791a7f420504936cb5129a081565e31e1d05101760e639561fce235df4d2  PL-06-Evidence.zip
+PS C:\PL-06-Forensics>
+PS C:\PL-06-Forensics> cd C:\PL-06-Forensics
+PS C:\PL-06-Forensics> Get-ChildItem | Select-Object Name
+
+Name
+----
+access.log
+auth.log
+Dockerfile
+evidence_notes.txt
+file_activity.csv
+PL-06-Evidence.zip
+SHA256SUMS.txt
+solution_timeline.csv
+
+
+PS C:\PL-06-Forensics> cd C:\PL-06-Forensics
+PS C:\PL-06-Forensics>
+PS C:\PL-06-Forensics> New-Item -ItemType Directory -Force verifier
+
+
+    Directory: C:\PL-06-Forensics
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        10/10/2026   4:29 PM                verifier
+
+
+PS C:\PL-06-Forensics>
+PS C:\PL-06-Forensics> cd verifier
+PS C:\PL-06-Forensics\verifier>
+PS C:\PL-06-Forensics\verifier> Get-Location
+
+Path
+----
+C:\PL-06-Forensics\verifier
+
+
+PS C:\PL-06-Forensics\verifier> notepad verifier.py
+PS C:\PL-06-Forensics\verifier> Get-ChildItem
+
+
+    Directory: C:\PL-06-Forensics\verifier
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        10/10/2026   4:30 PM           2979 verifier.py
+
+
+PS C:\PL-06-Forensics\verifier> notepad Dockerfile
+PS C:\PL-06-Forensics\verifier> Get-ChildItem
+
+
+    Directory: C:\PL-06-Forensics\verifier
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        10/10/2026   4:33 PM            128 Dockerfile.txt
+-a----        10/10/2026   4:30 PM           2979 verifier.py
+
+
+[+] Building 64.5s (9/9) FINISHED                                    docker:desktop-linux
+ => [internal] load build definition from Dockerfile                                 0.4s
+ => => transferring dockerfile: 167B                                                 0.1s
+ => [internal] load metadata for docker.io/library/python:3.12-slim                  6.2s
+ => [auth] library/python:pull token for registry-1.docker.io                        0.0s
+ => [internal] load .dockerignore                                                    0.1s
+ => => transferring context: 2B                                                      0.0s
+ => [1/3] FROM docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349  48.3s
+ => => resolve docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d3498  0.4s
+ => => sha256:6912e23eb44595b44dc6d9882b34f305ad6f6e9667cec70b13 12.12MB / 12.12MB  13.3s
+ => => sha256:bbc5a12237474ec0b23b5051260d56d6436a24d70d9cad961adebe7a0 249B / 249B  1.5s
+ => => sha256:75b6a36c64a1cf3520fc4b4aae4739d5caa8a6a05c27835a920a 1.29MB / 1.29MB  11.8s
+ => => sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c320 29.84MB / 29.84MB  40.2s
+ => => extracting sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a742991  4.4s
+ => => extracting sha256:75b6a36c64a1cf3520fc4b4aae4739d5caa8a6a05c27835a920a61784c  0.4s
+CONTAINER ID   IMAGE                     COMMAND                  CREATED          STATUS          PORTS                      NAMESb23b5051260d56d6436a24d70d9cad961adebe7a03  0.1s
+b0c5dfe94dde   pulselock-pl06-verifier   "python -u verifier.…"   48 seconds ago   Up 47 seconds   127.0.0.1:5050->5050/tcp   pl06-verifier                                    0.1s
+PS C:\PL-06-Forensics\verifier>                                                      0.5s
+ => [3/3] COPY verifier.py /app/verifier.py                                          0.1s
+ => exporting to image                                                               8.4s
+ => => exporting layers                                                              0.2s
+ => => exporting manifest sha256:a33629797057d12e370c94c2c92778eb49f78810071b063dcc  0.0s
+ => => exporting config sha256:dbff80306b3d81ea6eda371f33883671e8cd2f18534c52137f07  0.0s
+ => => exporting attestation manifest sha256:a0283cb9d1345f820b1e0b6be1961721bd24c8  0.0s
+ => => exporting manifest list sha256:01735c8b472b35aa309ac10cef0a34dc1e8c23b9fbee2  0.0s
+ => => naming to docker.io/library/pulselock-pl06-verifier:latest                    0.0s
+ => => unpacking to docker.io/library/pulselock-pl06-verifier:latest                 7.8s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/qeaj6anp08b0yz9wogdgrw989
+PS C:\PL-06-Forensics\verifier> docker run -d --name pl06-verifier -p 127.0.0.1:5050:5050 -e PL06_FLAG="PULSE{timeline_reconstructed}" pulselock-pl06-verifier
+b0c5dfe94dde0cc867da27a8ffb285782acc3e7633a3454379771dfe0fe6dabb
+PS C:\PL-06-Forensics\verifier> docker ps --filter "name=pl06-verifier"
+
+
+
+
+
+
+
+PS C:\PL-06-Forensics\verifier> docker logs pl06-verifier
+PL-06 verifier running on port 5050
+PS C:\PL-06-Forensics\verifier> cd C:\PL-06-Forensics\verifier
+[+] Building 8.2s (11/11) FINISHED
+ => [internal] load local bake definitions                                           0.0s
+ => => reading from stdin 549B                                                       0.0s
+ => [internal] load build definition from Dockerfile                                 0.2s
+ => => transferring dockerfile: 167B                                                 0.1s
+ => [internal] load metadata for docker.io/library/python:3.12-slim                  3.7s
+ => [auth] library/python:pull token for registry-1.docker.io                        0.0s
+NAME                       IMAGE                            COMMAND                  SERVICE         CREATED         STATUS         PORTS                                      0.0s
+verifier-pl06-verifier-1   pulselock-pl06-verifier:latest   "python -u verifier.…"   pl06-verifier   9 minutes ago   Up 9 minutes   127.0.0.1:5051->5050/tcpf2467ed0e9a8d3498  0.2s
+PS C:\PL-06-Forensics\verifier> t                                                    0.1s
+ => => transferring context: 33B                                                     0.0s
+ => CACHED [2/3] WORKDIR /app                                                        0.0s
+ => CACHED [3/3] COPY verifier.py /app/verifier.py                                   0.0s
+ => exporting to image                                                               0.7sm => => exporting layers                                                              0.0s
+ => => exporting manifest sha256:c91b2987b7aaf21fd6a8f0301348fe4001da476bcf40843020  0.1s
+ => => exporting config sha256:7f9655ed6fca4c3fcf06b4ddc296940ad3449ee8a47fce8c80ab  0.1s
+ => => exporting attestation manifest sha256:88a3de99dea4d855d0b787a7ade3923f3ec6c8  0.1s
+ => => exporting manifest list sha256:693d99a577f9070e3caf413929dd6cc32b070dbafd375  0.1s
+ => => naming to docker.io/library/pulselock-pl06-verifier:latest                    0.1s
+ => => unpacking to docker.io/library/pulselock-pl06-verifier:latest                 0.1s
+ => resolving provenance for metadata file                                           0.1s
+[+] up 3/3
+ ✔ Image pulselock-pl06-verifier:latest Built                                         9.0s ✔ Network verifier_default             Created                                       0.4s ✔ Container verifier-pl06-verifier-1   Started                                       2.9sPS C:\PL-06-Forensics\verifier> docker compose ps
+NAME                       IMAGE                            COMMAND                  SERVICE         CREATED          STATUS          PORTS
+verifier-pl06-verifier-1   pulselock-pl06-verifier:latest   "python -u verifier.…"   pl06-verifier   19 seconds ago   Up 17 seconds   127.0.0.1:5051->5050/tcp
+PS C:\PL-06-Forensics\verifier> cd C:\PL-06-Forensics\verifier
+PS C:\PL-06-Forensics\verifier> docker compose ps
+
+
+
+
+
+
+
+PS C:\PL-06-Forensics\verifier> cd C:\PL-06-Forensics\verifier
+PS C:\PL-06-Forensics\verifier> docker compose ps
+NAME                       IMAGE                            COMMAND                  SERVICE         CREATED          STATUS          PORTS
+verifier-pl06-verifier-1   pulselock-pl06-verifier:latest   "python -u verifier.…"   pl06-verifier   10 minutes ago   Up 10 minutes   127.0.0.1:5051->5050/tcp
+PS C:\PL-06-Forensics\verifier> notepad .env.example
+PS C:\PL-06-Forensics\verifier> Get-ChildItem -Force | Select-Object Name
+
+Name
+----
+.env
+.env.example
+.gitignore
+compose.yaml
+Dockerfile
+verifier.py
+
+
+PS C:\PL-06-Forensics\verifier> notepad .gitignore
+PS C:\PL-06-Forensics\verifier> Get-ChildItem -Force | Select-Object Name
+
+Name
+----
+.env
+.env.example
+.gitignore
+compose.yaml
+Dockerfile
+verifier.py
+
+
+PS C:\PL-06-Forensics\verifier> cd C:\PL-06-Forensics\verifier
+PS C:\PL-06-Forensics\verifier> notepad README.md
+PS C:\PL-06-Forensics\verifier> Get-Content .gitignore
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+solution_timeline.csv
+PS C:\PL-06-Forensics\verifier>
