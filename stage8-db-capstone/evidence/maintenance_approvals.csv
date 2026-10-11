@@ -1,0 +1,2 @@
+"change_id,db_user,database,approved_source,approved_start,approved_end,approved_actions,approver,status"
+"CHG-4421,dba_maintenance,RESEARCH_DB,10.20.5.15,2026-10-09 22:45:00,2026-10-09 23:30:00,ALTER TABLE; CREATE INDEX,Database Operations Manager,Approved"

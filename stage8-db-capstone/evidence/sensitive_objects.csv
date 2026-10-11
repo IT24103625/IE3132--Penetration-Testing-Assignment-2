@@ -1,0 +1,5 @@
+"database,object_name,classification,approved_roles,export_allowed"
+"PATIENT_DB,PATIENT_APPOINTMENTS,Confidential,Application Service;Clinical User,No"
+"REPORTING_DB,DAILY_OPERATIONS,Internal,Reporting Service,Yes"
+"RESEARCH_DB,CLINICAL_TRIAL_RESULTS,Highly Restricted,Research Administrator,No"
+"RESEARCH_DB,RESEARCH_SUMMARY,Confidential,Research Analyst,Yes"
