@@ -1,0 +1,20 @@
+PulseLock Linux Host - Service Inventory
+Host: pulselock-host
+Evidence collection time: Oct 10 10:30:00
+
+[Standard services]
+ssh.service - active
+nginx.service - active
+cron.service - active
+
+[Additional service]
+Name: medcore-health-sync.service
+Status: enabled
+User: backupsvc
+Executable: /opt/medcore/bin/health-sync
+Configuration: /etc/medcore/sync.conf
+Created: Oct 10 09:19:00
+
+Investigation note:
+Compare this service with the scheduled task in cron.txt.
+Determine whether both entries reference the same executable and account.

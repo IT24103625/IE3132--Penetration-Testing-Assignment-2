@@ -1,0 +1,15 @@
+PulseLock Medical Centre
+Restricted Research Archive
+
+Incident reference: PL-INC-105
+Host: pulselock-host
+
+An unexpected access event was reported on October 10.
+
+Investigation leads:
+- Identify the account that accessed the research directory.
+- Compare the scheduled task with the enabled service.
+- Review the protected-file metadata to identify the target artefact.
+
+The incident report does not contain the recovery flag.
+Continue the investigation using the supplied system evidence.
