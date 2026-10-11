@@ -1,0 +1,52 @@
+ PL-06 – Forensic Timeline Reconstruction
+
+**Category:** Digital Forensics  
+**Difficulty:** Moderate–Hard  
+**Points:** 350
+
+ Scenario
+Following a suspected security breach at MedCore Hospital, investigators recovered authentication logs, web server access logs, and file activity records.
+
+The security team suspects that an attacker gained unauthorized access to a research account, accessed sensitive research information, and attempted to conceal their activities.
+
+Your role is to act as a digital forensic investigator and reconstruct the incident timeline using the supplied evidence.
+
+Learning Objectives
+- Analyze authentication, web access, and file activity logs.
+- Correlate events across multiple evidence sources.
+- Normalize timestamps to UTC.
+- Identify suspicious account activity and file operations.
+- Reconstruct the sequence of events using forensic evidence.
+
+Your Tasks
+1. Download and extract `PL-06-Evidence.zip`.
+2. Identify the first confirmed successful SSH login.
+3. Determine the affected user account and source IP address.
+4. Identify when the research export file was created.
+5. Investigate suspicious file uploads and deletions.
+6. Reconstruct the incident timeline in chronological order.
+7. Support your findings using evidence from multiple logs.
+
+Provided Evidence
+- `auth.log` – Authentication events
+- `access.log` – Web server activity
+- `file_activity.csv` – File operations
+- `evidence_notes.txt` – Investigation instructions
+
+ Recommended Tools
+Linux terminal, grep, awk, sort, Python, and spreadsheet software.
+
+ Submission
+Analyze the forensic evidence and recover the challenge flag.
+
+**Flag Format:** `PULSE{...}`
+
+ Important
+Preserve the original evidence files. Perform your analysis on local copies and use the supplied SHA-256 checksum to verify evidence integrity.
+ Timeline Verification
+
+After analyzing the forensic evidence, open the [PL-06 Timeline Verifier](http://localhost:5050).
+
+Enter your five forensic findings and click **Verify Timeline**.
+
+If the timeline is correct, you will receive the PL-06 flag. Submit that flag in CTFd to complete the challenge.

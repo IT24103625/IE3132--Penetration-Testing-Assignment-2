@@ -1,0 +1,11 @@
+services:
+  pl06-verifier:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pulselock-pl06-verifier:latest
+    environment:
+      PL06_FLAG: ${PL06_FLAG:?Set PL06_FLAG in .env}
+    ports:
+      - "127.0.0.1:5051:5050"
+    restart: unless-stopped

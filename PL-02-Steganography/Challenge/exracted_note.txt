@@ -1,0 +1,12 @@
+OPERATION PULSELOCK
+Stage: PL-02 - The Hidden Campaign File
+Hospital: MedCore General Hospital
+
+CONFIDENTIAL ATTACKER COMMUNICATION
+
+The hidden campaign file has been discovered.
+
+FLAG: PULSE{hidden_campaign_revealed}
+
+NEXT STAGE: PL-03 - Encrypted Attacker Note
+CIPHERTEXT: [Pending from Member 3]
