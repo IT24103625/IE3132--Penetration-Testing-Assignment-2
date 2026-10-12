@@ -1,0 +1,17 @@
+services:
+  ctfd:
+    image: ctfd/ctfd:latest
+    container_name: pulselock-ctfd
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      - SECRET_KEY=${CTFD_SECRET_KEY}
+      - DATABASE_URL=sqlite:////var/uploads/ctfd.db
+      - UPLOAD_FOLDER=/var/uploads
+      - WORKERS=1
+    volumes:
+      - ctfd_data:/var/uploads
+    restart: unless-stopped
+
+volumes:
+  ctfd_data:

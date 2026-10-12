@@ -1,0 +1,4 @@
+"db_user,owner,account_type,approved_database,approved_source,access_expiry,status"
+"dba_maintenance,Database Operations,Privileged,RESEARCH_DB,10.20.5.15,2026-12-31,Active"
+"research_admin,Research Technology,Privileged,RESEARCH_DB,10.20.6.18,2026-12-31,Active"
+"contractor_read,External Research Support,Temporary,RESEARCH_DB,10.20.7.31,2026-10-01,Expired"

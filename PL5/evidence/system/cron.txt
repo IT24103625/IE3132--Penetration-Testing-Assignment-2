@@ -1,0 +1,19 @@
+PulseLock Linux Host - Scheduled Task Inventory
+Host: pulselock-host
+Evidence collection time: Oct 10 10:30:00
+
+[Standard scheduled tasks]
+/etc/cron.daily/logrotate
+/etc/cron.daily/apt-compat
+
+[Additional scheduled task]
+File: /etc/cron.d/medcore-health-sync
+Owner: backupsvc
+Permissions: -rw-r--r--
+Schedule: */15 * * * *
+Command: /opt/medcore/bin/health-sync --config /etc/medcore/sync.conf
+First observed: Oct 10 09:20:00
+
+Investigation note:
+The additional task is not listed in the standard task inventory.
+Verify its owner, creation time, and relationship to recent authentication activity.

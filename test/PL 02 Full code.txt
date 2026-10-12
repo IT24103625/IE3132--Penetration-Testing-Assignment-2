@@ -1,0 +1,148 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+
+PS C:\Users\kusha> docker --version
+Docker version 29.8.2, build 7fc2dff
+PS C:\Users\kusha> docker run --rm hello-world
+
+
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+
+
+
+
+
+
+
+
+
+
+4f55086f7dd0: Pull complete
+d5e71e642bf5: Download complete
+Digest: sha256:5e23090353324d887c48ad5e5c56d294eab81588df9605b07d1afe895f9cc8f8
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+PS C:\Users\kusha> mkdir c:\PL-02-Steganography
+
+
+
+    Directory: C:\
+
+
+Mode                 LastWriteTime        Length
+----                 -------------        ------
+d-----        10/10/2026   7:57 AM
+
+
+PS C:\Users\kusha> cd c:\PL-02-Steganography
+PS C:\PL-02-Steganography> dir
+
+
+    Directory: C:\PL-02-Steganography
+
+
+Mode                 LastWriteTime        Length
+----                 -------------        ------
+-a----        10/10/2026   8:04 AM           278
+
+
+[+] Building 88.4s (7/7) FINISHED                                                                      docker-container:desktop-linux
+ => [internal] load build definition from Dockerfile                                                                             0.2s
+ => => transferring dockerfile: 317B                                                                                             0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim                                                          4.5s
+ => [internal] load .dockerignore                                                                                                0.1s
+ => => transferring context: 2B                                                                                                  0.0s
+ => [1/3] FROM docker.io/library/debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587   25.8s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587    0.1s
+ => => sha256:7fd1ebe418b5079d4aa36f416af9b143d127bc75b0155d71cb5fd559b5e04d39 28.25MB / 28.25MB                                23.2s
+ => => extracting sha256:7fd1ebe418b5079d4aa36f416af9b143d127bc75b0155d71cb5fd559b5e04d39                                        2.4s
+ => [2/3] RUN apt-get update &&     apt-get install -y --no-install-recommends     steghide     libimage-exiftool-perl     fil  44.4s
+ => [3/3] WORKDIR /challenge                                                                                                     0.1s
+ => exporting to image                                                                                                          12.9s
+ => => exporting layers                                                                                                          6.7s
+ => => exporting manifest sha256:c22a1072d8bdd42b04f0d4163f98ba667b8e45a5142f4d12b0b1fa1ff95fbb92                                0.0s
+ => => exporting config sha256:8bfdef176a351e103a16a3155511516ed34084f7e78d71563ef61ad347e6f64d                                  0.0s
+ => => exporting attestation manifest sha256:2d33fe383e380353d148eb14530601e00fcf9fa0f836d2cd121e9e8f77a9ceb3                    0.1s
+ => => exporting manifest list sha256:5875df13de89f432e2800277c93772cc43a7704a1795034a47c76630fa3b93a5                           0.0s
+ => => naming to docker.io/library/pulselock-stego:latest                                                                        0.0s
+ => => unpacking to docker.io/library/pulselock-stego:latest                                                                     5.9s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/xv5n27jvtjwckjl1g24zoffq1
+PS C:\PL-02-Steganography> docker run --rm pulselock-stego steghide --version
+steghide version 0.5.1
+PS C:\PL-02-Steganography> cd C:\PL-02-Steganography
+>> Get-ChildItem | Select-Object Name, Length
+
+root@6d17b0ba4bc7:/challenge# steghide embed -cf hospital_campaign.jpg -ef hidden_note.txt -sf hospital_campaign_stego.jpg
+Enter passphrase:
+Re-Enter passphrase:
+embedding "hidden_note.txt" in "hospital_campaign.jpg"... done
+writing stego file "hospital_campaign_stego.jpg"... done
+root@6d17b0ba4bc7:/challenge# hospital_campaign_stego.jpg
+root@6d17b0ba4bc7:/challenge# steghide extract -sf hospital_campaign_stego.jpg -xf exracted_note.txt
+Enter passphrase:
+wrote extracted data to "exracted_note.txt".
+root@6d17b0ba4bc7:/challenge# cat extracted_note.txt
+cat: extracted_note.txt: No such file or directory
+root@6d17b0ba4bc7:/challenge#
+root@6d17b0ba4bc7:/challenge# ls -la /challenge
+total 812
+drwxrwxrwx 1 root root    512 Oct 10 03:09 .
+drwxr-xr-x 1 root root   4096 Oct 10 02:50 ..
+-rwxrwxrwx 1 root root    278 Oct 10 02:34 Dockerfile
+-rw-r--r-- 1 root root    309 Oct 10 03:09 exracted_note.txt
+-rwxrwxrwx 1 root root    309 Oct 10 02:49 hidden_note.txt
+-rwxrwxrwx 1 root root 411473 Oct 10 02:46 hospital_campaign.jpg
+-rw-r--r-- 1 root root 411403 Oct 10 03:05 hospital_campaign_stego.jpg
+root@6d17b0ba4bc7:/challenge# find /challenge -name "extracted_note.txt"
+root@6d17b0ba4bc7:/challenge# cat /challenge/extracted_note.txt
+cat: /challenge/extracted_note.txt: No such file or directory
+root@6d17b0ba4bc7:/challenge# cat /challenge/exracted_note.txt
+OPERATION PULSELOCK
+Stage: PL-02 - The Hidden Campaign File
+Hospital: MedCore General Hospital
+
+CONFIDENTIAL ATTACKER COMMUNICATION
+
+The hidden campaign file has been discovered.
+
+FLAG: PULSE{hidden_campaign_revealed}
+
+NEXT STAGE: PL-03 - Encrypted Attacker Note
+root@6d17b0ba4bc7:/challenge# exit
+exit
+PS C:\PL-02-Steganography> cd C:\PL-02-Steganography
+>> Get-FileHash .\hospital_campaign_stego.jpg -Algorithm SHA256
+
+Algorithm       Hash                                                                   Path
+---------       ----                                                                   ----
+SHA256          A590C823EA3355AA8E517DC7C0F899E568813C30212B6A1C92F0A9502F7A6B28       C:\PL-02-Steganography\hospital_campaign_stego.jpg
+                           $hash = (Get-FileHash .\hospital_campaign_stego.jpg -Algorithm SHA256).Hash.ToLower()
+>> "$hash  hospital_campaign_stego.jpg" | Set-Content -Encoding ascii SHA256SUMS.txt
+PS C:\PL-02-Steganography> Get-Content SHA256SUMS.txt
+a590c823ea3355aa8e517dc7c0f899e568813c30212b6a1c92f0a9502f7a6b28  hospital_campaign_stego.jpg
+PS C:\PL-02-Steganography>

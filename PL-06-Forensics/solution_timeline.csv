@@ -1,0 +1,10 @@
+﻿timestamp_utc,event,evidence
+2026-09-18T09:12:00Z,Failed guest SSH login,auth.log
+2026-09-18T09:13:15Z,Failed researcher SSH login,auth.log
+2026-09-18T09:14:22Z,Successful researcher SSH login,auth.log
+2026-09-18T09:14:30Z,Research dashboard accessed,access.log
+2026-09-18T09:17:05Z,Research export requested,access.log
+2026-09-18T09:18:40Z,Research export file created,file_activity.csv
+2026-09-18T09:21:12Z,Diagnostic script uploaded,file_activity.csv
+2026-09-18T09:24:30Z,Research export file deleted,file_activity.csv
+2026-09-18T09:26:40Z,SSH session disconnected,auth.log

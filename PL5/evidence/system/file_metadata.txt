@@ -1,0 +1,14 @@
+PulseLock Linux Host - File Metadata Evidence
+Host: pulselock-host
+Evidence collection time: Oct 10 10:30:00
+
+Target file: /srv/research/archive.flag
+Owner: root
+Group: root
+Permissions: 0600 (-rw-------)
+Last modified: Oct 10 09:21:14
+
+Investigation questions:
+1. Why can an ordinary user not read this file directly?
+2. Which suspicious account and persistence mechanism should be investigated?
+3. How does this evidence relate to the authentication and service records?

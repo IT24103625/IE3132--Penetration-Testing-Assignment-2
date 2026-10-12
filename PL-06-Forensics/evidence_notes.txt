@@ -1,0 +1,21 @@
+﻿OPERATION PULSELOCK
+PL-06 - FORENSIC TIMELINE RECONSTRUCTION
+
+Scenario:
+The MedCore General Hospital research server has experienced
+suspicious activity. Investigators recovered authentication logs,
+web access logs, and file activity records.
+
+Your task:
+1. Identify the first confirmed successful SSH login.
+2. Identify the affected user account.
+3. Identify the source IP address.
+4. Identify when the research export file was created.
+5. Reconstruct the sequence of suspicious events.
+6. Support your findings with evidence from multiple log files.
+
+Important:
+All timestamps must be converted to UTC.
+Do not modify the original evidence files.
+
+The PL-06 flag is awarded after successful timeline reconstruction.

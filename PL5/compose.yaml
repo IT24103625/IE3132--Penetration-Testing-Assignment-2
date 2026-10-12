@@ -1,0 +1,10 @@
+services:
+  pl5:
+    build:
+      context: .
+      dockerfile: container/Dockerfile
+    image: pulselock-pl5:1.0
+    container_name: pulselock-pl5
+    stdin_open: true
+    tty: true
+    read_only: true

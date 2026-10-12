@@ -1,0 +1,4 @@
+"event_id,event_time,event_type,source_host,destination_host,description,reference"
+"NET-8901,2026-10-09 22:16:54,Primary Link Failure,DB-PRIMARY-01,CORE-SW-02,Primary database network path became unavailable,INC-6621"
+"NET-8902,2026-10-09 22:17:08,Cluster Failover,DB-SECONDARY-01,DB-VIP-01,Database service moved to approved secondary node,INC-6621"
+"NET-8903,2026-10-09 22:24:31,Service Restored,DB-PRIMARY-01,DB-VIP-01,Primary database service restored,INC-6621"

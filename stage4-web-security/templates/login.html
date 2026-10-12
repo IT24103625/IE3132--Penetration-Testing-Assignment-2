@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Portal Login</title>
+</head>
+<body>
+
+<h1>Patient Portal Login</h1>
+
+<p>
+Authorized users only.
+</p>
+
+<form method="POST">
+
+    Username<br>
+    <input type="text" name="username">
+
+    <br><br>
+
+    Password<br>
+    <input type="password" name="password">
+
+    <br><br>
+
+    <button type="submit">
+        Login
+    </button>
+
+</form>
+
+<p style="color:red">
+{{ error }}
+</p>
+
+</body>
+</html>
