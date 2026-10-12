@@ -123,3 +123,24 @@ Operation PulseLock maintains:
 3. MariaDB Database Backup
 
 These backups enable full restoration of the CTF environment.
+
+## Additional Offline Backup
+
+A full Docker environment backup archive:
+
+OperationPulseLock-CTFd-Backup.zip
+
+is maintained separately because GitHub web uploads have file-size limitations.
+
+The archive contains:
+
+- docker-compose.yml
+- CTFd deployment files
+- environment configuration
+- Docker resources required for redeployment
+
+This archive can be used together with:
+
+ctfd_backup.sql
+
+to fully restore the Operation PulseLock platform.
